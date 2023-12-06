@@ -1,0 +1,72 @@
+{
+    "name": "cactus-galaxy/filament-astrotomic",
+    "description": "Filament support for Astrotomic's Laravel Translatable package.",
+    "keywords": [
+        "CactusGalaxy",
+        "laravel",
+        "filament-astrotomic"
+    ],
+    "homepage": "https://github.com/CactusGalaxy/FilamentAstrotomic",
+    "support": {
+        "issues": "https://github.com/CactusGalaxy/FilamentAstrotomic/issues",
+        "source": "https://github.com/CactusGalaxy/FilamentAstrotomic"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oleksandr Moik",
+            "email": "sashamoik2016@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "filament/filament": "^3.0",
+        "spatie/laravel-package-tools": "^1.15.0",
+        "illuminate/contracts": "^10.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^7.9",
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-arch": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CactusGalaxy\\FilamentAstrotomic\\": "src/",
+            "CactusGalaxy\\FilamentAstrotomic\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CactusGalaxy\\FilamentAstrotomic\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CactusGalaxy\\FilamentAstrotomic\\FilamentAstrotomicServiceProvider"
+            ],
+            "aliases": {
+                "FilamentAstrotomic": "CactusGalaxy\\FilamentAstrotomic\\Facades\\FilamentAstrotomic"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

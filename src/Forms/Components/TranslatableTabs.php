@@ -12,7 +12,9 @@ use Filament\Forms\Components\Tabs\Tab;
 class TranslatableTabs extends Tabs
 {
     protected array $availableLocales;
+
     private string $mainLocale;
+
     private FilamentAstrotomicTranslatablePlugin $plugin;
 
     protected function setUp(): void
@@ -27,8 +29,7 @@ class TranslatableTabs extends Tabs
     }
 
     /**
-     * @param callable(TranslatableTab):(array<Component>|Closure) $tabSchema
-     * @return self
+     * @param  callable(TranslatableTab):(array<Component>|Closure)  $tabSchema
      */
     public function localeTabSchema(callable $tabSchema): self
     {

@@ -28,8 +28,8 @@ class TestCase extends Orchestra
 
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'CactusGalaxy\\FilamentAstrotomic\\Database\\Factories\\' . class_basename(
-                    $modelName
-                ) . 'Factory'
+                $modelName
+            ) . 'Factory'
         );
     }
 

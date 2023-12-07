@@ -27,7 +27,9 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'CactusGalaxy\\FilamentAstrotomic\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'CactusGalaxy\\FilamentAstrotomic\\Database\\Factories\\' . class_basename(
+                    $modelName
+                ) . 'Factory'
         );
     }
 
@@ -55,7 +57,6 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-
         /*
         $migration = include __DIR__.'/../database/migrations/create_filamentastrotomic_table.php.stub';
         $migration->up();

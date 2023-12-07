@@ -4,6 +4,7 @@ namespace CactusGalaxy\FilamentAstrotomic\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
+use CactusGalaxy\FilamentAstrotomic\FilamentAstrotomicServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
@@ -18,7 +19,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
-use CactusGalaxy\FilamentAstrotomic\FilamentAstrotomicServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -27,7 +27,9 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'CactusGalaxy\\FilamentAstrotomic\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+            fn (string $modelName) => 'CactusGalaxy\\FilamentAstrotomic\\Database\\Factories\\' . class_basename(
+                    $modelName
+                ) . 'Factory'
         );
     }
 
@@ -55,7 +57,6 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-
         /*
         $migration = include __DIR__.'/../database/migrations/create_filamentastrotomic_table.php.stub';
         $migration->up();

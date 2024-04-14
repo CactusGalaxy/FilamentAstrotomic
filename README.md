@@ -133,7 +133,9 @@ class ViewProduct extends ViewRecord
 
 ### Setting the translatable locales for a particular resource
 
-By default, the translatable locales can be [set globally for all resources in the plugin configuration](#setting-the-default-translatable-locales). Alternatively, you can customize the translatable locales for a particular resource by overriding the `getTranslatableLocales()` method in your resource class:
+By default, the translatable locales loaded using [Astrotomic's Locales helper from method `all()`](https://docs.astrotomic.info/laravel-translatable/package/locales-helper#all)
+which returns all locales from the `translatable.locales` configuration.
+Alternatively, you can customize the translatable locales for a particular resource by overriding the `getTranslatableLocales()` method in your resource class:
 
 ```php
 use CactusGalaxy\FilamentAstrotomic\Resources\Concerns\ResourceTranslatable;
@@ -161,26 +163,53 @@ You can use it in your form like this:
 
 ```php
 use CactusGalaxy\FilamentAstrotomic\Forms\Components\TranslatableTabs;
+use CactusGalaxy\FilamentAstrotomic\Resources\Concerns\ResourceTranslatable;
 use CactusGalaxy\FilamentAstrotomic\TranslatableTab;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
 
-TranslatableTabs::make()
-    ->localeTabSchema(fn (TranslatableTab $tab) => [
-        Forms\Components\TextInput::make($tab->makeName('name'))
-            // required only for main locale
-            ->required($tab->isMainLocale())
-            ->maxLength(255)
-            // generate slug for item based on main locale
-            ->live(onBlur: true)
-            ->afterStateUpdated(function (Forms\Set $set, Forms\Get $get, $state) use ($tab) {
-                if ($tab->isMainLocale()) {
-                    $set('slug', Str::slug($state));
-                }
-            }),
-    ]),
+class ProductResource extends Resource
+{
+    use ResourceTranslatable;
+
+    // ...
+   
+    public static function form(Form $form): Form
+    {
+        return $form->columns(1)->schema([
+            Forms\Components\TextInput::make('slug')
+                ->unique(ignoreRecord: true)
+                ->required()
+                ->readOnly()
+                ->helperText('Генерується автоматично при зміні назви')
+                ->maxLength(255),
+            
+            TranslatableTabs::make()
+                ->localeTabSchema(fn (TranslatableTab $tab) => [
+                    Forms\Components\TextInput::make($tab->makeName('name'))
+                        // required only for main locale
+                        ->required($tab->isMainLocale())
+                        ->maxLength(255)
+                        // generate slug for item based on main locale
+                        ->live(onBlur: true)
+                        ->afterStateUpdated(function (Forms\Set $set, Forms\Get $get, $state) use ($tab) {
+                            if ($tab->isMainLocale()) {
+                                $set('slug', Str::slug($state));
+                            }
+                        }),
+                ]),
+
+            // ...
+        ]);
+    }
+    
+    // ...
+}
 ```
 
-With this code, you will get tabs for each locale with `name` field in each tab. `name` field will be **required
-** only for the **main locale**.
+![translatable-tabs.png](assets/translatable-tabs.png)
+
+With this code, you will get tabs for each locale with `name` field in each tab. `name` field will be **required** only for the **main locale**.
 Also, it will generate a slug for the item based on the main locale.
 
 By default `$tab->makeName('name')` uses array syntax for naming -`{$locale}.{$name}`, but you can change it calling `makeNameUsing` on `TranslatableTabs`, for example use [plain syntax](https://docs.astrotomic.info/laravel-translatable/usage/forms#request-as-plain-syntax):
@@ -193,8 +222,6 @@ TranslatableTabs::make()
     ->makeNameUsingPlainSyntax()
     // ..
 ```
-
-![translatable-tabs.png](assets/translatable-tabs.png)
 
 ## Processing modal forms with translations
 
@@ -241,7 +268,7 @@ class ProductResource extends Resource
                     return self::mutateTranslatableData($record, $data);
                 })->mutateFormDataUsing(function (Product $record, array $data) {
                     $record->unsetRelation('translation');
-        
+
                             return $data;
                 }),
                 // ...

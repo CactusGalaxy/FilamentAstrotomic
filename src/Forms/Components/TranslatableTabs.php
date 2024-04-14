@@ -13,6 +13,8 @@ class TranslatableTabs extends Tabs
 {
     protected array $availableLocales;
 
+    protected ?Closure $nameGenerator = null;
+
     private string $mainLocale;
 
     private FilamentAstrotomicTranslatablePlugin $plugin;
@@ -29,6 +31,14 @@ class TranslatableTabs extends Tabs
     }
 
     /**
+     * @param  Closure(string $name,string $locale):string|null  $callback
+     */
+    public function makeNameUsing(?Closure $callback): static
+    {
+        return $this->tap(fn () => $this->nameGenerator = $callback);
+    }
+
+    /**
      * @param  callable(TranslatableTab):(array<Component>|Closure)  $tabSchema
      */
     public function localeTabSchema(callable $tabSchema): self
@@ -39,6 +49,8 @@ class TranslatableTabs extends Tabs
                     ->label($this->plugin->getLocaleLabel($locale));
 
                 $translatableTab = new TranslatableTab($tab, $locale, $this->mainLocale);
+
+                $translatableTab->makeNameUsing($this->nameGenerator);
 
                 $schema = $tabSchema($translatableTab);
 

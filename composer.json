@@ -3,8 +3,14 @@
     "description": "Filament support for Astrotomic's Laravel Translatable package.",
     "keywords": [
         "CactusGalaxy",
+        "cactus-galaxy",
         "laravel",
-        "filament-astrotomic"
+        "filament-astrotomic",
+        "astrotomic",
+        "laravel-translatable",
+        "filament",
+        "translatable",
+        "translations"
     ],
     "homepage": "https://github.com/CactusGalaxy/FilamentAstrotomic",
     "support": {
@@ -36,8 +42,7 @@
     },
     "autoload": {
         "psr-4": {
-            "CactusGalaxy\\FilamentAstrotomic\\": "src/",
-            "CactusGalaxy\\FilamentAstrotomic\\Database\\Factories\\": "database/factories/"
+            "CactusGalaxy\\FilamentAstrotomic\\": "src/"
         }
     },
     "autoload-dev": {
@@ -49,7 +54,8 @@
         "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "lint": "@format"
     },
     "config": {
         "sort-packages": true,

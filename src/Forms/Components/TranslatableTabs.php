@@ -31,11 +31,16 @@ class TranslatableTabs extends Tabs
     }
 
     /**
-     * @param  Closure(string $name,string $locale):string|null  $callback
+     * @param  Closure(string $name, string $locale):string|null  $callback
      */
     public function makeNameUsing(?Closure $callback): static
     {
         return $this->tap(fn () => $this->nameGenerator = $callback);
+    }
+
+    public function makeNameUsingPlainSyntax(): static
+    {
+        return $this->makeNameUsing(fn (string $name, string $locale) => "{$name}:{$locale}");
     }
 
     /**

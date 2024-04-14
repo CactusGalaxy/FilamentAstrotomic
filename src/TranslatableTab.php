@@ -47,6 +47,9 @@ class TranslatableTab
         return "{$this->locale}.{$name}";
     }
 
+    /**
+     * @param  Closure(string $name, string $locale):string|null  $callback
+     */
     public function makeNameUsing(?Closure $callback = null): void
     {
         $this->nameGenerator = $callback;

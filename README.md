@@ -1,4 +1,4 @@
-# filament astrotomic translations
+# Filament Astrotomic Translations
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/cactus-galaxy/filament-astrotomic.svg?style=flat-square)](https://packagist.org/packages/cactus-galaxy/filament-astrotomic)
 
@@ -11,16 +11,32 @@
 This package is an extension for [Filament](https://filamentphp.com) and [laravel-translatable](https://docs.astrotomic.info/laravel-translatable).
 
 > Inspired by [spatie/laravel-translatable](https://github.com/filamentphp/spatie-laravel-translatable-plugin), another alternative
-> for translation package for your Laravel application.
+> for the translation package for your Laravel application.
 
-> See more configuration examples of Filament panel in [GalaxyStore](https://github.com/CactusGalaxy/GalaxyStoreExample) - demo project with Filament, Astrotomic package and more.
+> See more configuration examples of the Filament panel in [GalaxyStore](https://github.com/CactusGalaxy/GalaxyStoreExample) - demo project with Filament, Astrotomic package and more.
 
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
 
 ```bash
 composer require cactus-galaxy/filament-astrotomic
+```
+
+If you are running on Laravel 11, you must use another version of the astrotomic package `v11.13`, which is available via fork. 
+Add the following lines to your `composer.json` file and repeat composer installation command.
+
+> See more information about that in a pull request - https://github.com/Astrotomic/laravel-translatable/pull/395
+
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Oleksandr-Moik/laravel-translatable.git"
+        }
+    ],
+}
 ```
 
 Publish configs for [`astrotomic/laravel-translatable`](https://docs.astrotomic.info/laravel-translatable/installation#configuration) package:
@@ -29,7 +45,7 @@ Publish configs for [`astrotomic/laravel-translatable`](https://docs.astrotomic.
 php artisan vendor:publish --tag="translatable"
 ```
 
-After this you will have to configure the locales your app should use.
+After this, you will have to configure the locales your app should use.
 
 ```php
 'locales' => [
@@ -154,9 +170,9 @@ class ProductResource extends Resource
 }
 ```
 
-## Using locale tabs on form
+## Using locale tabs on the form
 
-`TranslatableTabs` extends default [`Filament\Forms\Components\Tabs`](https://filamentphp.com/docs/3.x/forms/layout/tabs) component and provides a way to create tab schema tabs for each locale.
+`TranslatableTabs` extends the default [`Filament\Forms\Components\Tabs`](https://filamentphp.com/docs/3.x/forms/layout/tabs) component and provides a way to create tab schema tabs for each locale.
 Within the `localeTabSchema` method, you can define the schema for each tab.
 
 You can use it in your form like this:
@@ -187,10 +203,10 @@ class ProductResource extends Resource
             TranslatableTabs::make()
                 ->localeTabSchema(fn (TranslatableTab $tab) => [
                     Forms\Components\TextInput::make($tab->makeName('name'))
-                        // required only for main locale
+                        // required only for the main locale
                         ->required($tab->isMainLocale())
                         ->maxLength(255)
-                        // generate slug for item based on main locale
+                        // generate slug for the item based on the main locale
                         ->live(onBlur: true)
                         ->afterStateUpdated(function (Forms\Set $set, Forms\Get $get, $state) use ($tab) {
                             if ($tab->isMainLocale()) {
@@ -212,13 +228,13 @@ class ProductResource extends Resource
 With this code, you will get tabs for each locale with `name` field in each tab. `name` field will be **required** only for the **main locale**.
 Also, it will generate a slug for the item based on the main locale.
 
-By default `$tab->makeName('name')` uses array syntax for naming -`{$locale}.{$name}`, but you can change it calling `makeNameUsing` on `TranslatableTabs`, for example use [plain syntax](https://docs.astrotomic.info/laravel-translatable/usage/forms#request-as-plain-syntax):
+By default `$tab->makeName('name')` uses array syntax for naming -`{$locale}.{$name}`, but you can change it by calling `makeNameUsing` on `TranslatableTabs`, for example, use [plain syntax](https://docs.astrotomic.info/laravel-translatable/usage/forms#request-as-plain-syntax):
 
 ```php
 TranslatableTabs::make()
     // plain syntax
     ->makeNameUsing(fn (string $name, string $locale) => "{$name}:{$locale}")
-    // or use alias
+    // or use an alias
     ->makeNameUsingPlainSyntax()
     // ..
 ```
@@ -229,11 +245,11 @@ If you want to use translations in modal forms, you need to make some changes, t
 
 ### Edit table action
 
-For example, we have `ProductResource` but don't have edit page.
+For example, we have `ProductResource` but don't have an edit page.
 
 To process translations in the Edit action modal, you need to override the `mutateRecordDataUsing` method of the `EditAction` class in the resource class.
 
-And if you are using Column with path `translation.*`, make sure to unset the `translation` relation from the record data before returning it, otherwise, the record data will be saved incorrectly.
+And if you are using a Column with path `translation.*`, make sure to unset the `translation` relation from the record data before returning it, otherwise, the record data will be saved incorrectly.
 
 ```php
 use App\Models\Product;
@@ -279,15 +295,15 @@ class ProductResource extends Resource
     {
         return [
             'index' => Pages\ListProducts::route('/'),
-            // edit route are missing 
+            // edit route is missing 
         ];
     }
 ```
 
 ### Select with modal options
 
-There is more complex example with `Select` component.
-For example, we need to manage (create or edit) category for the product.
+There is a more complex example with `Select` component.
+For example, we need to manage (create or edit) a category for the product.
 
 In the `CategoryResource` defined form with translatable fields.
 
@@ -376,14 +392,14 @@ Forms\Components\Select::make('category_id')
 
 ## Columns for translatable models on listings
 
-Out the box Filament supports nesting for column, what means you can use `.` in column path to access nested properties, and you don't need special column for translatable models.
+Out of the box, Filament supports nesting for columns, which means you can use `.` in the column path to access nested properties, and you don't need a special column for translatable models.
 
 ```php
 Tables\Columns\TextColumn::make('translation.name'),
 ```
 
-**But** searching by translatable are more complicated to write for each text column. 
-To solve and to add option to search by column, we recommend add following lines to configure your column to your **ServiceProvider** in **boot** method.
+**But** searching by translatable column is more complicated to write for each text column. 
+To solve and to add an option to search by column, we recommend adding the following lines to configure your column to your **ServiceProvider** in **boot** method.
 
 > From [FilamentServiceProvider](https://github.com/CactusGalaxy/GalaxyStoreExample/blob/main/app/Providers/FilamentServiceProvider.php#L81) of `GalaxyStore` 
 
@@ -414,7 +430,7 @@ TextColumn::configureUsing(function (TextColumn $column): void {
 });
 ```
 
-> Maybe in feature someone will create a column for that 🙂, but currently you can use this code to configure your columns.
+> Maybe in the feature someone will create a column for that 🙂, but currently you can use this code to configure your columns.
 
 ## Testing
 

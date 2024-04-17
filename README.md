@@ -1,12 +1,12 @@
 # Filament Astrotomic Translations
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/cactus-galaxy/filament-astrotomic.svg?style=flat-square)](https://packagist.org/packages/cactus-galaxy/filament-astrotomic)
+[![Total Downloads](https://img.shields.io/packagist/dt/cactus-galaxy/filament-astrotomic.svg?style=flat-square)](https://packagist.org/packages/cactus-galaxy/filament-astrotomic)
 
 [//]: # ([![GitHub Tests Action Status]&#40;https://img.shields.io/github/actions/workflow/status/cactus-galaxy/filament-astrotomic/run-tests.yml?branch=main&label=tests&style=flat-square&#41;]&#40;https://github.com/cactus-galaxy/filament-astrotomic/actions?query=workflow%3Arun-tests+branch%3Amain&#41;)
 
 [//]: # ([![GitHub Code Style Action Status]&#40;https://img.shields.io/github/actions/workflow/status/cactus-galaxy/filament-astrotomic/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square&#41;]&#40;https://github.com/cactus-galaxy/filament-astrotomic/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain&#41;)
 
-[![Total Downloads](https://img.shields.io/packagist/dt/cactus-galaxy/filament-astrotomic.svg?style=flat-square)](https://packagist.org/packages/cactus-galaxy/filament-astrotomic)
 
 This package is an extension for [Filament](https://filamentphp.com) and [laravel-translatable](https://docs.astrotomic.info/laravel-translatable).
 
@@ -21,22 +21,6 @@ You can install the package via Composer:
 
 ```bash
 composer require cactus-galaxy/filament-astrotomic
-```
-
-If you are running on Laravel 11, you must use another version of the astrotomic package `v11.13`, which is available via fork. 
-Add the following lines to your `composer.json` file and repeat composer installation command.
-
-> See more information about that in a pull request - https://github.com/Astrotomic/laravel-translatable/pull/395
-
-```json
-{
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/Oleksandr-Moik/laravel-translatable.git"
-        }
-    ],
-}
 ```
 
 Publish configs for [`astrotomic/laravel-translatable`](https://docs.astrotomic.info/laravel-translatable/installation#configuration) package:

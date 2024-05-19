@@ -28,6 +28,21 @@ class TranslatableTabs extends Tabs
      */
     protected string $mainLocale;
 
+    /**
+     * Holds the tabs that will be prepended to the tabs.
+     */
+    protected array $prependTabs = [];
+
+    /**
+     * Holds the localised tabs.
+     */
+    protected array $localeTabs = [];
+
+    /**
+     * Holds the tabs that will be appended to the tabs.
+     */
+    protected array $appendTabs = [];
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -37,6 +52,15 @@ class TranslatableTabs extends Tabs
 
         $this->availableLocales = $plugin->allLocales();
         $this->mainLocale = $plugin->getMailLocale();
+
+        /**
+         * Merge all tabs in the correct order.
+         */
+        $this->tabs(fn () => [
+            ...$this->prependTabs,
+            ...$this->localeTabs,
+            ...$this->appendTabs,
+        ]);
     }
 
     /**
@@ -58,13 +82,13 @@ class TranslatableTabs extends Tabs
     }
 
     /**
-     * Generates the localised tabs with given schema for all available localles
+     * Generates the localised tabs with given schema for all available locales
      *
      * @param  callable(TranslatableTab):(array<Component>|Closure)  $tabSchema
      */
     public function localeTabSchema(callable $tabSchema): self
     {
-        $localeTabs = collect($this->availableLocales)
+        $this->localeTabs = collect($this->availableLocales)
             ->map(function (string $locale) use ($tabSchema) {
                 $tab = Tab::make($locale)
                     ->label($this->plugin->getLocaleLabel($locale));
@@ -79,6 +103,32 @@ class TranslatableTabs extends Tabs
             })
             ->all();
 
-        return $this->tabs($localeTabs);
+        return $this;
+    }
+
+    /**
+     * Prepends tabs before localised tabs.
+     *
+     * @param  array|callable():(array)  $tabs
+     * @return $this
+     */
+    public function prependTabs(array | callable $tabs = []): self
+    {
+        $this->prependTabs = $this->evaluate($tabs);
+
+        return $this;
+    }
+
+    /**
+     * Appends tabs after localised tabs.
+     *
+     * @param  array|callable():(array)  $tabs
+     * @return $this
+     */
+    public function appendTabs(array | callable $tabs = []): self
+    {
+        $this->appendTabs = $this->evaluate($tabs);
+
+        return $this;
     }
 }

@@ -11,13 +11,22 @@ use Filament\Forms\Components\Tabs\Tab;
 
 class TranslatableTabs extends Tabs
 {
-    protected array $availableLocales;
+    protected FilamentAstrotomicTranslatablePlugin $plugin;
 
+    /**
+     * Callback to generate the name of the tab.
+     */
     protected ?Closure $nameGenerator = null;
 
-    private string $mainLocale;
+    /**
+     * Available locales of the application.
+     */
+    protected array $availableLocales;
 
-    private FilamentAstrotomicTranslatablePlugin $plugin;
+    /**
+     * Main locale of the application.
+     */
+    protected string $mainLocale;
 
     protected function setUp(): void
     {
@@ -31,6 +40,8 @@ class TranslatableTabs extends Tabs
     }
 
     /**
+     * Set the callback to generate the name of the tab.
+     *
      * @param  Closure(string $name, string $locale):string|null  $callback
      */
     public function makeNameUsing(?Closure $callback): static
@@ -38,12 +49,17 @@ class TranslatableTabs extends Tabs
         return $this->tap(fn () => $this->nameGenerator = $callback);
     }
 
+    /**
+     * Set the name of the tab using plain syntax `{$name}:{$locale}`.
+     */
     public function makeNameUsingPlainSyntax(): static
     {
         return $this->makeNameUsing(fn (string $name, string $locale) => "{$name}:{$locale}");
     }
 
     /**
+     * Generates the localised tabs with given schema for all available localles
+     *
      * @param  callable(TranslatableTab):(array<Component>|Closure)  $tabSchema
      */
     public function localeTabSchema(callable $tabSchema): self

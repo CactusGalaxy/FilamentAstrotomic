@@ -47,7 +47,7 @@ class FilamentAstrotomicTranslatablePlugin implements Plugin
     {
         return tap(app(Locales::class)->all(), function (array $locales) {
             foreach ($locales as $locale) {
-                throw_if(! is_string($locale), new Exception('Sorry, but the locales must be strings.'));
+                throw_if(!is_string($locale), new Exception('Sorry, but the locales must be strings.'));
             }
         });
     }

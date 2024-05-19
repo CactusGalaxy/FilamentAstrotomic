@@ -1,5 +1,5 @@
 {
-    "preset": "laravel",
+    "preset": "psr12",
     "rules": {
         "blank_line_before_statement": true,
         "concat_space": {
@@ -8,7 +8,7 @@
         "method_argument_space": true,
         "single_trait_insert_per_statement": true,
         "types_spaces": {
-            "space": "single"
+            "space": "none"
         }
     }
 }

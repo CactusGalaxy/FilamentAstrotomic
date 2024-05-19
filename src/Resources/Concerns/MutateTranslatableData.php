@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 trait MutateTranslatableData
 {
     /**
-     * @param  Model|Translatable  $record
+     * @param Model|Translatable $record
      */
     public static function mutateTranslatableData(Model $record, array $data = []): array
     {
-        if (! method_exists($record, 'getTranslationsArray')) {
+        if (!method_exists($record, 'getTranslationsArray')) {
             return $data;
         }
 

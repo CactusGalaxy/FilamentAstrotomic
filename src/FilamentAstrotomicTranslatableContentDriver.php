@@ -21,7 +21,7 @@ class FilamentAstrotomicTranslatableContentDriver implements TranslatableContent
         /** @var Model|Translatable $model */
         $model = app($model);
 
-        if (! method_exists($model, 'isTranslationAttribute')) {
+        if (!method_exists($model, 'isTranslationAttribute')) {
             return false;
         }
 
@@ -29,7 +29,7 @@ class FilamentAstrotomicTranslatableContentDriver implements TranslatableContent
     }
 
     /**
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed> $data
      */
     public function makeRecord(string $model, array $data): Model
     {
@@ -41,7 +41,7 @@ class FilamentAstrotomicTranslatableContentDriver implements TranslatableContent
         return $record;
     }
 
-    public function setRecordLocale(Model | Translatable $record): Model
+    public function setRecordLocale(Model|Translatable $record): Model
     {
         if (method_exists($record, 'setDefaultLocale')) {
             $record->setDefaultLocale($this->activeLocale);
@@ -51,7 +51,7 @@ class FilamentAstrotomicTranslatableContentDriver implements TranslatableContent
     }
 
     /**
-     * @param  array<string, mixed>  $data
+     * @param array<string, mixed> $data
      */
     public function updateRecord(Model $record, array $data): Model
     {
@@ -93,9 +93,9 @@ class FilamentAstrotomicTranslatableContentDriver implements TranslatableContent
         );
     }
 
-    protected static function mutateTranslatableData(Model | Translatable $record, array $data = []): array
+    protected static function mutateTranslatableData(Model|Translatable $record, array $data = []): array
     {
-        if (! method_exists($record, 'getTranslationsArray')) {
+        if (!method_exists($record, 'getTranslationsArray')) {
             return $data;
         }
 

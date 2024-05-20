@@ -97,7 +97,11 @@ class TranslatableTabs extends Tabs
 
                 $translatableTab->makeNameUsing($this->nameGenerator);
 
-                $schema = $tabSchema($translatableTab);
+                $schema = $this->evaluate(
+                    $tabSchema,
+                    namedInjections: ['translatableTab' => $translatableTab],
+                    typedInjections: [TranslatableTab::class => $translatableTab],
+                );
 
                 return $tab->schema($schema);
             })

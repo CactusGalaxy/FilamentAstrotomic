@@ -157,9 +157,14 @@ class ProductResource extends Resource
 ## Using locale tabs on the form
 
 `TranslatableTabs` extends the default [`Filament\Forms\Components\Tabs`](https://filamentphp.com/docs/3.x/forms/layout/tabs) component and provides a way to create tab schema tabs for each locale.
-Within the `localeTabSchema` method, you can define the schema for each tab.
+Within the `localeTabSchema` method, you can define the callback for schema for each tab. 
+This callback will be called for each locale to generate scheme for tab. 
 
-You can use it in your form like this:
+> `localeTabSchema` supports [utility injection](https://filamentphp.com/docs/3.x/forms/advanced#form-component-utility-injection)
+
+To accept the `TranslatableTab` instance as an argument to get the current locale you need to name argument as `$translatableTab` or use type hint, like in example bellow.
+
+Here is an example of how to use `TranslatableTabs` in the `ProductResource` form:
 
 ```php
 use CactusGalaxy\FilamentAstrotomic\Forms\Components\TranslatableTabs;
@@ -183,7 +188,7 @@ class ProductResource extends Resource
                 ->readOnly()
                 ->helperText('Генерується автоматично при зміні назви')
                 ->maxLength(255),
-            
+
             TranslatableTabs::make()
                 ->localeTabSchema(fn (TranslatableTab $tab) => [
                     Forms\Components\TextInput::make($tab->makeName('name'))
@@ -221,6 +226,34 @@ TranslatableTabs::make()
     // or use an alias
     ->makeNameUsingPlainSyntax()
     // ..
+```
+
+### Prepend or append tabs
+
+Sometimes you need to add tabs before or after the localized tabs. You can use the `prependTabs` and `appendTabs` methods for this:
+
+```php
+use Filament\Forms\Components\Tabs\Tab;
+
+
+TranslatableTabs::make()
+    ->localeTabSchema(fn (TranslatableTab $tab) => [
+        // ...
+    ])
+    ->prependTabs([
+        Tab::make('Tab before localized')
+            ->schema([
+                // ...
+            ])
+        // ...
+    ])
+    ->appendTabs(fn () => [ // you also can pass a callback or array
+        Tab::make('Tab after localized')
+            ->schema([
+                // ...
+            ])
+        // ...
+    ])
 ```
 
 ## Processing modal forms with translations
@@ -269,7 +302,7 @@ class ProductResource extends Resource
                 })->mutateFormDataUsing(function (Product $record, array $data) {
                     $record->unsetRelation('translation');
 
-                            return $data;
+                    return $data;
                 }),
                 // ...
             ]);

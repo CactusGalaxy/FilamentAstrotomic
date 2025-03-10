@@ -57,9 +57,11 @@ class FilamentAstrotomicTranslatablePlugin implements Plugin
         return app(Locales::class)->current();
     }
 
-    public function getLocaleLabelUsing(?Closure $callback): void
+    public function getLocaleLabelUsing(?Closure $callback): static
     {
         $this->getLocaleLabelUsing = $callback;
+
+        return $this;
     }
 
     public function getLocaleLabel(string $locale, ?string $displayLocale = null): ?string

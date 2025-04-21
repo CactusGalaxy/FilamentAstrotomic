@@ -84,12 +84,11 @@ class FilamentAstrotomicTranslatableContentDriver implements TranslatableContent
         /** @var Connection $databaseConnection */
         $databaseConnection = $query->getConnection();
 
-        $databaseConnection->getDriverName();
-
-        return $query->{$whereClause}(
+        return $query->{"{$whereClause}Relation"}(
+            'translations',
             generate_search_column_expression($column, $isCaseInsensitivityForced, $databaseConnection),
             'like',
-            "%{$search}%",
+            (string)str($search)->wrap('%'),
         );
     }
 

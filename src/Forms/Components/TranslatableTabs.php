@@ -47,6 +47,7 @@ class TranslatableTabs extends Tabs
     {
         parent::setUp();
 
+        // todo: take from resource
         /** @var FilamentAstrotomicTranslatablePlugin $plugin */
         $this->plugin = $plugin = filament('filament-astrotomic-translatable');
 

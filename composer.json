@@ -1,5 +1,5 @@
 {
-    "name": "cactus-galaxy/filament-astrotomic",
+    "name": "threls/filament-astrotomic",
     "description": "Filament support for Astrotomic's Laravel Translatable package.",
     "keywords": [
         "CactusGalaxy",
@@ -12,7 +12,7 @@
         "translatable",
         "translations"
     ],
-    "homepage": "https://github.com/CactusGalaxy/FilamentAstrotomic",
+    "homepage": "https://github.com/threls/FilamentAstrotomic",
     "support": {
         "issues": "https://github.com/CactusGalaxy/FilamentAstrotomic/issues",
         "source": "https://github.com/CactusGalaxy/FilamentAstrotomic"
@@ -28,7 +28,7 @@
     "require": {
         "php": "^8.1",
         "astrotomic/laravel-translatable": "^11.12",
-        "filament/filament": "^3.0",
+        "filament/filament": "^3.0 || ^4.0",
         "laravel/framework":  "^10.0 || ^11.0 || ^12.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },

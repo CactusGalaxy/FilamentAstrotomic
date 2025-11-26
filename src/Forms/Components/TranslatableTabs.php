@@ -5,9 +5,9 @@ namespace CactusGalaxy\FilamentAstrotomic\Forms\Components;
 use CactusGalaxy\FilamentAstrotomic\FilamentAstrotomicTranslatablePlugin;
 use CactusGalaxy\FilamentAstrotomic\TranslatableTab;
 use Closure;
-use Filament\Forms\Components\Component;
-use Filament\Forms\Components\Tabs;
-use Filament\Forms\Components\Tabs\Tab;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 
 class TranslatableTabs extends Tabs
 {
@@ -66,7 +66,7 @@ class TranslatableTabs extends Tabs
     /**
      * Set the callback to generate the name of the tab.
      *
-     * @param Closure(string $name, string $locale):string|null $callback
+     * @param  Closure(string $name, string $locale):string|null  $callback
      */
     public function makeNameUsing(?Closure $callback): static
     {
@@ -84,7 +84,7 @@ class TranslatableTabs extends Tabs
     /**
      * Generates the localised tabs with given schema for all available locales
      *
-     * @param callable(TranslatableTab):(array<Component>|Closure) $tabSchema
+     * @param  callable(TranslatableTab):(array<Component>|Closure)  $tabSchema
      */
     public function localeTabSchema(callable $tabSchema): self
     {
@@ -113,7 +113,7 @@ class TranslatableTabs extends Tabs
     /**
      * Prepends tabs before localised tabs.
      *
-     * @param array|callable():(array) $tabs
+     * @param  array|callable():(array)  $tabs
      * @return $this
      */
     public function prependTabs(array|callable $tabs = []): self
@@ -126,7 +126,7 @@ class TranslatableTabs extends Tabs
     /**
      * Appends tabs after localised tabs.
      *
-     * @param array|callable():(array) $tabs
+     * @param  array|callable():(array)  $tabs
      * @return $this
      */
     public function appendTabs(array|callable $tabs = []): self

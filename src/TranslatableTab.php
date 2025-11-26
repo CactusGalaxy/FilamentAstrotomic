@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CactusGalaxy\FilamentAstrotomic;
 
 use Closure;
-use Filament\Forms\Components\Tabs\Tab;
+use Filament\Schemas\Components\Tabs\Tab;
 
 class TranslatableTab
 {
@@ -18,8 +18,7 @@ class TranslatableTab
         protected Tab $tab,
         protected string $locale,
         protected string $mailLocale,
-    ) {
-    }
+    ) {}
 
     /**
      * Get current tab component
